@@ -12,6 +12,7 @@ services:
         networks:
             - house-lock
     php-fpm:
+        container_name: house-lock-php
         build:
             context: .
             dockerfile: docker/Dockerfile
