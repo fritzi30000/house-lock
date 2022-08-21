@@ -17,7 +17,7 @@
         "feat": {
             "description": "Changes which introduce a new feature",
             "scopes": {
-                "gr": {},
+                "flat": {},
                 "tda": {}
             }
         },
