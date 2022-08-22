@@ -10,6 +10,8 @@ use HouseLock\Flat\Domain\Exception\CannotRemoveFlatIfThereAreTenants;
 use HouseLock\Flat\Domain\Exception\MaxFlatCapacityCannotBeLessThanCurrentTenantNumber;
 use HouseLock\Shared\Address;
 use HouseLock\Tests\Shared\SystemConst;
+use Money\Currency;
+use Money\Money;
 
 final class Flat
 {
@@ -18,6 +20,11 @@ final class Flat
     public const ADDRESS = 'address';
     public const MAXIMUM_CAPACITY = 'maximumCapacity';
     public const DESCRIPTION = 'description';
+    public const DEPOSIT_AMOUNT = 'depositAmount';
+    public const DEPOSIT_CURRENCY = 'depositCurrency';
+    public const RENTAL_PRICE = 'rentalPriceAmount';
+    public const RENTAL_PRICE_CURRENCY = 'rentalPriceCurrency';
+    public const UTILITIES = 'utilities';
 
     private ?Carbon $deletedAt = null;
 
@@ -25,7 +32,9 @@ final class Flat
         private readonly ?FlatId $flatId,
         private Address $address,
         private int $maximumCapacity,
-        private string $description
+        private string $description,
+        private Money $deposit,
+        private Utilities $utilities
     ) {
     }
 
@@ -35,13 +44,22 @@ final class Flat
             new FlatId($payload[self::FLAT_ID], $payload[self::USER_ID]),
             Address::ofPayload($payload[self::ADDRESS]),
             $payload[self::MAXIMUM_CAPACITY],
-            $payload[self::DESCRIPTION]
+            $payload[self::DESCRIPTION],
+            new Money($payload[self::DEPOSIT_AMOUNT], new Currency($payload[self::DEPOSIT_CURRENCY])),
+            Utilities::ofPayload($payload[self::UTILITIES])
         );
     }
 
     public static function create(int $userId, CreateFlat $payload): self
     {
-        return new self(new FlatId(null, $userId), $payload->address, $payload->maximumCapacity, $payload->description);
+        return new self(
+            new FlatId(null, $userId),
+            $payload->address,
+            $payload->maximumCapacity,
+            $payload->description,
+            $payload->deposit,
+            Utilities::ofPayload($payload->utilities)
+        );
     }
 
     public function update(string $description): bool
@@ -79,6 +97,27 @@ final class Flat
         }
 
         $this->maximumCapacity = $maximumCapacity;
+        return true;
+    }
+
+    public function updateDeposit(Money $deposit): bool
+    {
+        if ($this->deposit->equals($deposit)) {
+            return false;
+        }
+        $this->deposit = clone $deposit;
+        return true;
+    }
+
+    public function updateUtilitiesConfig(array $utilitiesPayload): bool
+    {
+        $utilities = Utilities::ofPayload($utilitiesPayload);
+
+        if (!$this->utilities->equals($utilities)) {
+            return false;
+        }
+
+        $this->utilities = clone $utilities;
         return true;
     }
 

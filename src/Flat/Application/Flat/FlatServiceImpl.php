@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace HouseLock\Flat\Application\Flat;
 
 use HouseLock\Flat\Application\Command\CreateFlat;
+use HouseLock\Flat\Application\Command\UpdateDepositConfig;
 use HouseLock\Flat\Application\Command\UpdateFlat;
 use HouseLock\Flat\Application\Command\UpdateFlatAddress;
 use HouseLock\Flat\Application\Command\UpdateFlatCapacity;
+use HouseLock\Flat\Application\Command\UpdateUtilitiesConfig;
 use HouseLock\Flat\Application\FlatRepository;
 use HouseLock\Flat\Application\FlatService;
 use HouseLock\Flat\Domain\Flat\Flat;
@@ -30,7 +32,9 @@ final class FlatServiceImpl implements FlatService
 
     public function update(FlatId $flatId, UpdateFlat $command): bool
     {
-        return $this->repository->get($flatId)->update($command->description);
+        $flat = $this->repository->get($flatId);
+        $result = $flat->update($command->description);
+        return $this->save($result, $flat);
     }
 
     public function updateFlatAddress(FlatId $flatId, UpdateFlatAddress $command): bool
@@ -38,21 +42,47 @@ final class FlatServiceImpl implements FlatService
         if ($this->repository->existsUnderAddress($flatId->landlordId, $command->address)) {
             throw FlatException::alreadyExistsUnderAddress($command->address);
         }
-        return $this->repository->get($flatId)->updateAddress($command->address);
+        $flat = $this->repository->get($flatId);
+        $result = $flat->updateAddress($command->address);
+        return $this->save($result, $flat);
     }
 
     public function updateFlatCapacity(FlatId $flatId, UpdateFlatCapacity $command): bool
     {
         $flat = $this->repository->get($flatId);
         $currentTenantNumber = $this->tenantishService->getCurrentOccupiedSlotsNumber();
-        return $flat->updateMaximumCapacity($currentTenantNumber, $command->maximumCapacity);
+        $result = $flat->updateMaximumCapacity($currentTenantNumber, $command->maximumCapacity);
+        return $this->save($result, $flat);
+    }
+
+    public function updateDepositConfig(FlatId $flatId, UpdateDepositConfig $command): bool
+    {
+        $flat = $this->repository->get($flatId);
+        $result = $flat->updateDeposit($command->deposit);
+        return $this->save($result, $flat);
+    }
+
+    public function updateUtilitiesConfig(FlatId $flatId, UpdateUtilitiesConfig $command): bool
+    {
+        $flat = $this->repository->get($flatId);
+        $result = $flat->updateUtilitiesConfig($command->utilitiesPayload);
+        return $this->save($result, $flat);
     }
 
     public function delete(FlatId $flatId): bool
     {
         $flat = $this->repository->get($flatId);
         $currentTenantNumber = $this->tenantishService->getCurrentOccupiedSlotsNumber();
-        return $flat->delete($currentTenantNumber);
+        $result = $flat->delete($currentTenantNumber);
+        return $this->save($result, $flat);
+    }
+
+    private function save(bool $result, Flat $flat): bool
+    {
+        if ($result) {
+            $this->repository->save($flat);
+        }
+        return $result;
     }
 
 }

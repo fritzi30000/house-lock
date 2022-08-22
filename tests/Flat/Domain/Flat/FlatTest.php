@@ -7,6 +7,8 @@ use HouseLock\Flat\Domain\Exception\MaxFlatCapacityCannotBeLessThanCurrentTenant
 use HouseLock\Flat\Domain\Flat\Flat;
 use HouseLock\Tests\Flat\Application\Command\CreateFlatObjectMother;
 use HouseLock\Tests\Shared\AddressObjectMother;
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -58,6 +60,30 @@ class FlatTest extends TestCase
 
         // When
         $result = $flat->update('description');
+
+        //Then
+        self::assertFalse($result);
+    }
+
+    public function testShouldUpdateFlatsDeposit(): void
+    {
+        // Given
+        $flat = Flat::ofPayload(FlatPayloadObjectMother::aFlatInKrakowPayload());
+
+        // When
+        $result = $flat->updateDeposit(new Money(200000, new Currency('EUR')));
+
+        //Then
+        self::assertTrue($result);
+    }
+
+    public function testShouldNotUpdateFlatsDepositBecauseItIsTheSame(): void
+    {
+        // Given
+        $flat = Flat::ofPayload(FlatPayloadObjectMother::aFlatInKrakowPayload());
+
+        // When
+        $result = $flat->updateDeposit(new Money(150000, new Currency('EUR')));
 
         //Then
         self::assertFalse($result);

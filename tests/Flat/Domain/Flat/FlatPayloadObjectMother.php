@@ -16,7 +16,11 @@ final class FlatPayloadObjectMother
             Flat::USER_ID => 1,
             Flat::ADDRESS => AddressObjectMother::anAddressInKrakowPayload(),
             Flat::DESCRIPTION => 'description',
-            Flat::MAXIMUM_CAPACITY => 3
+            Flat::MAXIMUM_CAPACITY => 3,
+            Flat::DEPOSIT_AMOUNT => 150000,
+            Flat::DEPOSIT_CURRENCY => 'EUR',
+            Flat::RENTAL_PRICE => 100000,
+            Flat::RENTAL_PRICE_CURRENCY => 'EUR'
         ];
     }
 }
