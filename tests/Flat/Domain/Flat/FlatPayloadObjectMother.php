@@ -19,8 +19,7 @@ final class FlatPayloadObjectMother
             Flat::MAXIMUM_CAPACITY => 3,
             Flat::DEPOSIT_AMOUNT => 150000,
             Flat::DEPOSIT_CURRENCY => 'EUR',
-            Flat::RENTAL_PRICE => 100000,
-            Flat::RENTAL_PRICE_CURRENCY => 'EUR'
+            Flat::UTILITIES => []
         ];
     }
 }

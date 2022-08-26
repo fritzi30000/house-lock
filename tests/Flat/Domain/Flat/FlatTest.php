@@ -113,6 +113,30 @@ class FlatTest extends TestCase
         self::assertFalse($result);
     }
 
+    public function testShouldUpdateFlatUtilities(): void
+    {
+        // Given
+        $flat = Flat::ofPayload(FlatPayloadObjectMother::aFlatInKrakowPayload());
+
+        // When
+        $result = $flat->updateUtilitiesConfig([UtilityPayloadMotherObject::aPowerByMeterBilledMonthly()]);
+
+        //Then
+        self::assertTrue($result);
+    }
+
+    public function testShouldNotUpdateUtilitiesBecauseItIsTheSame(): void
+    {
+        // Given
+        $flat = Flat::ofPayload(FlatPayloadObjectMother::aFlatInKrakowPayload());
+
+        // When
+        $result = $flat->updateUtilitiesConfig([]);
+
+        //Then
+        self::assertFalse($result);
+    }
+
     public function testShouldUpdateMaximumCapacity(): void
     {
         // Given

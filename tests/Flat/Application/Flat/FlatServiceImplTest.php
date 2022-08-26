@@ -2,8 +2,8 @@
 
 namespace HouseLock\Tests\Flat\Application\Flat;
 
-use HouseLock\Flat\Application\Flat\FlatException;
-use HouseLock\Flat\Application\Flat\FlatServiceImpl;
+use HouseLock\Flat\Application\FlatException;
+use HouseLock\Flat\Application\Service\FlatServiceImpl;
 use HouseLock\Flat\Infrastructure\FlatInMemoryRepository;
 use HouseLock\Tests\Flat\Application\Command\CreateFlatObjectMother;
 use PHPUnit\Framework\TestCase;

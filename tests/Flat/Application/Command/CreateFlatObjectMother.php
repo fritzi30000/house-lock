@@ -12,8 +12,11 @@ final class CreateFlatObjectMother
     public static function aDefaultFlat(): CreateFlat
     {
         return new CreateFlat(
-            AddressObjectMother::anAddressInKrakow(), 3, 'Some additional description of flat',
-            new Money(250000, new Currency('EUR'))
+            AddressObjectMother::anAddressInKrakow(),
+            3,
+            'Some additional description of flat',
+            new Money(250000, new Currency('EUR')),
+            []
         );
     }
 }
