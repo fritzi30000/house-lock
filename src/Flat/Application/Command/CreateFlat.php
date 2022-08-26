@@ -14,7 +14,6 @@ final class CreateFlat
         public readonly int $maximumCapacity,
         public readonly string $description,
         public readonly Money $deposit,
-        public readonly Money $rentalPrice,
         public readonly array $utilities
     ) {
     }

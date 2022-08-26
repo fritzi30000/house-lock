@@ -22,8 +22,6 @@ final class Flat
     public const DESCRIPTION = 'description';
     public const DEPOSIT_AMOUNT = 'depositAmount';
     public const DEPOSIT_CURRENCY = 'depositCurrency';
-    public const RENTAL_PRICE = 'rentalPriceAmount';
-    public const RENTAL_PRICE_CURRENCY = 'rentalPriceCurrency';
     public const UTILITIES = 'utilities';
 
     private ?Carbon $deletedAt = null;
@@ -113,7 +111,7 @@ final class Flat
     {
         $utilities = Utilities::ofPayload($utilitiesPayload);
 
-        if (!$this->utilities->equals($utilities)) {
+        if ($this->utilities->equals($utilities)) {
             return false;
         }
 

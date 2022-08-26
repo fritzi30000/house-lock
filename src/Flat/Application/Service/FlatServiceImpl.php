@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HouseLock\Flat\Application\Flat;
+namespace HouseLock\Flat\Application\Service;
 
 use HouseLock\Flat\Application\Command\CreateFlat;
 use HouseLock\Flat\Application\Command\UpdateDepositConfig;
@@ -10,6 +10,7 @@ use HouseLock\Flat\Application\Command\UpdateFlat;
 use HouseLock\Flat\Application\Command\UpdateFlatAddress;
 use HouseLock\Flat\Application\Command\UpdateFlatCapacity;
 use HouseLock\Flat\Application\Command\UpdateUtilitiesConfig;
+use HouseLock\Flat\Application\FlatException;
 use HouseLock\Flat\Application\FlatRepository;
 use HouseLock\Flat\Application\FlatService;
 use HouseLock\Flat\Domain\Flat\Flat;

@@ -26,7 +26,7 @@ final class Prepaid implements BillingPeriodSettlementStrategy
     public function serialize(): array
     {
         return [
-            self::TYPE => $this->getType(),
+            self::TYPE => $this->getType()->value,
             self::PRICE => $this->price->getAmount(),
             self::CURRENCY => $this->price->getCurrency()->getCode(),
         ];

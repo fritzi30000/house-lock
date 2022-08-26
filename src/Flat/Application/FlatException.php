@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HouseLock\Flat\Application\Flat;
+namespace HouseLock\Flat\Application;
 
 use HouseLock\Shared\Address;
 use HouseLock\Shared\Exception\HouseLockException;
