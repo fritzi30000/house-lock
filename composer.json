@@ -18,6 +18,7 @@
         "symfony/yaml": "6.1.*"
     },
     "require-dev": {
+        "phpmetrics/phpmetrics": "^2.8",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
         "symfony/browser-kit": "6.1.*",
@@ -56,6 +57,9 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
+        "test": "php bin/phpunit",
+        "coverage": "php -dxdebug.mode=coverage bin/phpunit --coverage-html ./reports/coverage",
+        "metrics": "",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
