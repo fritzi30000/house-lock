@@ -4,38 +4,45 @@ declare(strict_types=1);
 
 namespace HouseLock\FlatRent\Domain;
 
+use HouseLock\FlatRent\Domain\Exception\FlatRentException;
+
 final class FlatRent
 {
     public function __construct(private Tenants $tenants)
     {
     }
 
-    public function rent(Tenants $tenants, int $flatMaxCapacity): bool
+    public function rent(Tenant $tenant, int $flatMaxCapacity): bool
     {
-        if (!$this->haveEnoughFreeSlots($tenants->getQuantity(), $flatMaxCapacity)) {
+        if (!$this->haveEnoughFreeSlots($tenant, $flatMaxCapacity)) {
             throw FlatRentException::cannotRentFlatOverMaximumCapacity(
                 $flatMaxCapacity,
                 $this->tenants->getQuantity(),
-                $tenants->getQuantity()
+                $tenant->getQuantity()
             );
         }
 
-        if (empty($tenants->people)) {
+        if ($tenant->getQuantity() === 0) {
             return false;
         }
 
-        foreach ($tenants->people as $person) {
-            if ($this->tenants->exists($person)) {
-                throw FlatRentException::cannotRentFlatToTheSamePersonAgain($person);
-            }
-            $this->tenants->add($person);
-        }
+        $this->tenants->add($tenant);
 
         return true;
     }
 
-    private function haveEnoughFreeSlots(int $newTenantsQuantity, int $flatMaxCapacity): bool
+    public function updatePeriod(int $tenantId, Period $period): bool
     {
-        return $this->tenants->getQuantity() + $newTenantsQuantity <= $flatMaxCapacity;
+        $this->tenants->updatePeriod($tenantId, $period);
+        return true;
+    }
+
+    private function haveEnoughFreeSlots(Tenant $tenant, int $flatMaxCapacity): bool
+    {
+        return $this->tenants->periodOverlapsQuantity($tenant) <= $flatMaxCapacity;
+    }
+
+    public function payDeposit(int $tenantId): bool
+    {
     }
 }

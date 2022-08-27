@@ -7,7 +7,7 @@ namespace HouseLock\Shared;
 final class PhoneNumber
 {
 
-    public function __construct(public readonly string $phoneNumber)
+    public function __construct(public readonly string $value)
     {
     }
 }

@@ -13,4 +13,9 @@ final class PersonContact
         public readonly Email $email
     ) {
     }
+
+    public function serialize(): string
+    {
+        return "$this->firstName $this->lastName, email: {$this->email->value}, phone: {$this->phoneNumber->value}";
+    }
 }
