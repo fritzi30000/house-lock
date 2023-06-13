@@ -13,13 +13,16 @@ use HouseLock\Flat\Application\Command\UpdateUtilitiesConfig;
 use HouseLock\Flat\Application\FlatException;
 use HouseLock\Flat\Application\FlatRepository;
 use HouseLock\Flat\Application\FlatService;
+use HouseLock\Flat\Application\TenantishService;
 use HouseLock\Flat\Domain\Flat\Flat;
 use HouseLock\Flat\Domain\Flat\FlatId;
 
 final class FlatServiceImpl implements FlatService
 {
-    public function __construct(private readonly FlatRepository $repository)
-    {
+    public function __construct(
+        private readonly FlatRepository $repository,
+        private readonly TenantishService $tenantishService
+    ) {
     }
 
     public function create(int $userId, CreateFlat $command): FlatId
