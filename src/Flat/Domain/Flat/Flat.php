@@ -86,8 +86,10 @@ final class Flat
     public function updateMaximumCapacity($currentTenantNumber, int $maximumCapacity): bool
     {
         if ($currentTenantNumber > $maximumCapacity) {
-            throw MaxFlatCapacityCannotBeLessThanCurrentTenantNumber::ofCapacities($currentTenantNumber,
-                $maximumCapacity);
+            throw MaxFlatCapacityCannotBeLessThanCurrentTenantNumber::ofCapacities(
+                $currentTenantNumber,
+                $maximumCapacity
+            );
         }
 
         if ($this->maximumCapacity === $maximumCapacity) {
@@ -95,6 +97,7 @@ final class Flat
         }
 
         $this->maximumCapacity = $maximumCapacity;
+
         return true;
     }
 

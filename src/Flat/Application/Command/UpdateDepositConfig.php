@@ -8,7 +8,6 @@ use Money\Money;
 
 final class UpdateDepositConfig
 {
-
     public function __construct(public readonly Money $deposit)
     {
     }
