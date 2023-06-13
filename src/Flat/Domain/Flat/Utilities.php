@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace HouseLock\Flat\Domain\Flat;
 
-final class Utilities implements \JsonSerializable
+use InvalidArgumentException;
+use JsonSerializable;
+
+final class Utilities implements JsonSerializable
 {
     /**
      * @param UtilityBillingConfig[] $list
@@ -21,7 +24,7 @@ final class Utilities implements \JsonSerializable
             $utility = UtilityBillingConfig::ofPayload($payloadItem);
 
             if (isset($utilitiesList[$utility->getId()])) {
-                throw new \InvalidArgumentException("Two utilities of the same name: {$utility->getId()})");
+                throw new InvalidArgumentException("Two utilities of the same name: {$utility->getId()})");
             }
             $utilitiesList[$utility->getId()] = $utility;
         }
@@ -40,6 +43,7 @@ final class Utilities implements \JsonSerializable
         foreach ($this->list as $utility) {
             $serialized[] = $utility->jsonSerialize();
         }
+
         return $serialized;
     }
 }

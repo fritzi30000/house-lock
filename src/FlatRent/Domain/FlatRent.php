@@ -34,15 +34,16 @@ final class FlatRent
     public function updatePeriod(int $tenantId, Period $period): bool
     {
         $this->tenants->updatePeriod($tenantId, $period);
+
         return true;
+    }
+
+    public function payDeposit(int $tenantId): bool
+    {
     }
 
     private function haveEnoughFreeSlots(Tenant $tenant, int $flatMaxCapacity): bool
     {
         return $this->tenants->periodOverlapsQuantity($tenant) <= $flatMaxCapacity;
-    }
-
-    public function payDeposit(int $tenantId): bool
-    {
     }
 }

@@ -18,7 +18,6 @@ final class FlatRentServiceImpl implements FlatRentService
     ) {
     }
 
-
     public function rentFlat(int $landlordId, int $flatId, Tenant $tenant): bool
     {
         $flatMaxCapacity = $this->flatViewModel->getFlatMaxCapacity($landlordId, $flatId);
@@ -44,13 +43,13 @@ final class FlatRentServiceImpl implements FlatRentService
         }
 
         return $result;
-        //check if start date changed -> any open billings -> yes -> close billing -> change date
-        //if end date changed  -> any open billings past this date -> yes -> close billings -> change date
+        // check if start date changed -> any open billings -> yes -> close billing -> change date
+        // if end date changed  -> any open billings past this date -> yes -> close billings -> change date
     }
 
     public function payDeposit(int $landlordId, int $flatId, int $tenantId): bool
     {
-        //pay deposit
+        // pay deposit
         $flatRent = $this->repository->getFlatRent($tenantId, $landlordId);
         $result = $flatRent->payDeposit($tenantId);
 
@@ -63,7 +62,7 @@ final class FlatRentServiceImpl implements FlatRentService
 
     public function endRent(int $tenantId, int $flatId): bool
     {
-        //mark as inactive and archive somehow
+        // mark as inactive and archive somehow
         return true;
     }
 }

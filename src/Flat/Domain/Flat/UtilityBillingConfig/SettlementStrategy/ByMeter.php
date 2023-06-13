@@ -9,11 +9,10 @@ use HouseLock\Flat\Domain\Flat\UtilityBillingConfig\SettlementType;
 
 final class ByMeter implements BillingPeriodSettlementStrategy
 {
-
     public function __construct()
     {
-        //todo
-        //tariffs, days, nights and so on
+        // todo
+        // tariffs, days, nights and so on
 //        'tariffs' => [
 //            ['price' => 0.43, 'name' => 'day'],
 //            ['price' => 0.38, 'name' => 'night']
@@ -36,5 +35,4 @@ final class ByMeter implements BillingPeriodSettlementStrategy
     {
         return SettlementType::BY_METER;
     }
-
 }

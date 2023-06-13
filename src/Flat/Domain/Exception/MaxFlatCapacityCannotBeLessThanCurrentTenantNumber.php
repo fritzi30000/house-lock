@@ -11,7 +11,9 @@ final class MaxFlatCapacityCannotBeLessThanCurrentTenantNumber extends HouseLock
 {
     public static function ofCapacities(int $currentTenantNumber, int $maximumCapacity): self
     {
-        return new self("Maximum capacity ($maximumCapacity) of flat cannot be less than current number of tenants ($currentTenantNumber)",
-            Response::HTTP_CONFLICT);
+        return new self(
+            "Maximum capacity ($maximumCapacity) of flat cannot be less than current number of tenants ($currentTenantNumber)",
+            Response::HTTP_CONFLICT
+        );
     }
 }

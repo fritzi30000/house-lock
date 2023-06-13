@@ -6,8 +6,9 @@ namespace HouseLock\Shared;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use JsonSerializable;
 
-final class TimeInterval implements \JsonSerializable
+final class TimeInterval implements JsonSerializable
 {
     public const INTERVAL = 'interval';
     public const TYPE = 'type';
@@ -18,13 +19,14 @@ final class TimeInterval implements \JsonSerializable
 
     public static function ofPayload(array $payload): self
     {
-        return new self((int)$payload[self::INTERVAL], TimeIntervalType::from($payload[self::TYPE]));
+        return new self((int) $payload[self::INTERVAL], TimeIntervalType::from($payload[self::TYPE]));
     }
 
     public function next(Carbon $date): Carbon
     {
         $carbonInterval = CarbonInterval::make($this->interval, $this->intervalType->name);
         $date->add($carbonInterval);
+
         return $date;
     }
 
@@ -32,8 +34,7 @@ final class TimeInterval implements \JsonSerializable
     {
         return [
             self::INTERVAL => $this->interval,
-            self::TYPE => $this->intervalType->name
+            self::TYPE => $this->intervalType->name,
         ];
     }
-
 }

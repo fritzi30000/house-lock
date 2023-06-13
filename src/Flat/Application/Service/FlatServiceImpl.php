@@ -28,6 +28,7 @@ final class FlatServiceImpl implements FlatService
             throw FlatException::alreadyExistsUnderAddress($command->address);
         }
         $flat = Flat::create($userId, $command);
+
         return $this->repository->save($flat);
     }
 
@@ -35,6 +36,7 @@ final class FlatServiceImpl implements FlatService
     {
         $flat = $this->repository->get($flatId);
         $result = $flat->update($command->description);
+
         return $this->save($result, $flat);
     }
 
@@ -45,6 +47,7 @@ final class FlatServiceImpl implements FlatService
         }
         $flat = $this->repository->get($flatId);
         $result = $flat->updateAddress($command->address);
+
         return $this->save($result, $flat);
     }
 
@@ -53,6 +56,7 @@ final class FlatServiceImpl implements FlatService
         $flat = $this->repository->get($flatId);
         $currentTenantNumber = $this->tenantishService->getCurrentOccupiedSlotsNumber();
         $result = $flat->updateMaximumCapacity($currentTenantNumber, $command->maximumCapacity);
+
         return $this->save($result, $flat);
     }
 
@@ -60,6 +64,7 @@ final class FlatServiceImpl implements FlatService
     {
         $flat = $this->repository->get($flatId);
         $result = $flat->updateDeposit($command->deposit);
+
         return $this->save($result, $flat);
     }
 
@@ -67,6 +72,7 @@ final class FlatServiceImpl implements FlatService
     {
         $flat = $this->repository->get($flatId);
         $result = $flat->updateUtilitiesConfig($command->utilitiesPayload);
+
         return $this->save($result, $flat);
     }
 
@@ -75,6 +81,7 @@ final class FlatServiceImpl implements FlatService
         $flat = $this->repository->get($flatId);
         $currentTenantNumber = $this->tenantishService->getCurrentOccupiedSlotsNumber();
         $result = $flat->delete($currentTenantNumber);
+
         return $this->save($result, $flat);
     }
 
@@ -83,7 +90,7 @@ final class FlatServiceImpl implements FlatService
         if ($result) {
             $this->repository->save($flat);
         }
+
         return $result;
     }
-
 }

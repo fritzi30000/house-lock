@@ -20,7 +20,7 @@ final class Address
         public readonly string $flatNumber,
         public readonly string $postalCode,
         public readonly string $city,
-        public readonly string $countryCode, //todo value object / library
+        public readonly string $countryCode, // todo value object / library
         public readonly ?string $province = null
     ) {
     }

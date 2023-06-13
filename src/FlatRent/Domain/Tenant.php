@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HouseLock\FlatRent\Domain;
 
+use function count;
+
 final class Tenant
 {
     /** @var Person[] */
@@ -16,7 +18,7 @@ final class Tenant
 
     public function getId(): int
     {
-        //todo
+        // todo
     }
 
     public function getQuantity(): int
@@ -27,6 +29,7 @@ final class Tenant
     public function updatePeriod(Period $period): bool
     {
         $this->period = $period;
+
         return true;
     }
 
@@ -37,6 +40,7 @@ final class Tenant
                 return true;
             }
         }
+
         return false;
     }
 
@@ -44,5 +48,4 @@ final class Tenant
     {
         return $this->period;
     }
-
 }

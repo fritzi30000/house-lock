@@ -11,7 +11,9 @@ final class CannotRemoveFlatIfThereAreTenants extends HouseLockException
 {
     public static function ofNumberOfTenants(int $currentTenantNumber): self
     {
-        return new self("Cannot remove flat if there are tenants (tenants number: $currentTenantNumber)",
-            Response::HTTP_CONFLICT);
+        return new self(
+            "Cannot remove flat if there are tenants (tenants number: $currentTenantNumber)",
+            Response::HTTP_CONFLICT
+        );
     }
 }

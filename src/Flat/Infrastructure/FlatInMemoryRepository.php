@@ -24,9 +24,9 @@ final class FlatInMemoryRepository implements FlatRepository
         if (!isset($this->flats[$flatId->id]) || $this->flats[$flatId->id]->getLandlordId() !== $flatId->landlordId) {
             throw FlatDoesNotExist::ofId($flatId);
         }
+
         return $this->flats[$flatId->id];
     }
-
 
     public function existsUnderAddress(int $userId, Address $address): bool
     {
@@ -35,13 +35,14 @@ final class FlatInMemoryRepository implements FlatRepository
                 return true;
             }
         }
+
         return false;
     }
 
     public function save(Flat $flat): FlatId
     {
         $this->flats[] = $flat;
-        return new FlatId((int)array_key_last($this->flats), $flat->getLandlordId());
-    }
 
+        return new FlatId((int) array_key_last($this->flats), $flat->getLandlordId());
+    }
 }

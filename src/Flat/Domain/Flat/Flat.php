@@ -66,6 +66,7 @@ final class Flat
             return false;
         }
         $this->description = $description;
+
         return true;
     }
 
@@ -75,6 +76,7 @@ final class Flat
             return false;
         }
         $this->address = $address;
+
         return true;
     }
 
@@ -107,6 +109,7 @@ final class Flat
             return false;
         }
         $this->deposit = clone $deposit;
+
         return true;
     }
 
@@ -119,6 +122,7 @@ final class Flat
         }
 
         $this->utilities = clone $utilities;
+
         return true;
     }
 
@@ -128,6 +132,7 @@ final class Flat
             throw CannotRemoveFlatIfThereAreTenants::ofNumberOfTenants($currentTenantNumber);
         }
         $this->deletedAt = Carbon::now(SystemConst::DEFAULT_TIMEZONE);
+
         return true;
     }
 

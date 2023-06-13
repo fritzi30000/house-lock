@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace HouseLock\Flat\Domain\Flat\UtilityBillingConfig;
 
 use HouseLock\Shared\TimeInterval;
+use JsonSerializable;
 
-final class BillingPeriod implements \JsonSerializable
+final class BillingPeriod implements JsonSerializable
 {
     public const START_AT_DAY = 'startAtDay';
     public const TIME_INTERVAL = 'timeInterval';
@@ -18,7 +19,7 @@ final class BillingPeriod implements \JsonSerializable
     public static function ofPayload(array $payload): self
     {
         return new self(
-            (int)$payload[self::START_AT_DAY],
+            (int) $payload[self::START_AT_DAY],
             TimeInterval::ofPayload($payload[self::TIME_INTERVAL])
         );
     }
@@ -27,9 +28,7 @@ final class BillingPeriod implements \JsonSerializable
     {
         return [
             self::START_AT_DAY => $this->startAtDay,
-            self::TIME_INTERVAL => $this->interval->jsonSerialize()
+            self::TIME_INTERVAL => $this->interval->jsonSerialize(),
         ];
     }
-
-
 }

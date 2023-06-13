@@ -22,6 +22,7 @@ final class Tenants
         foreach ($this->tenants as $tenant) {
             $quantity += $tenant->getQuantity();
         }
+
         return $quantity;
     }
 
@@ -33,17 +34,8 @@ final class Tenants
             }
         }
         $this->tenants[] = $tenant;
-        return true;
-    }
 
-    private function exists(Person $person): bool
-    {
-        foreach ($this->tenants as $currentlyRentingTenant) {
-            if ($currentlyRentingTenant->exists($person)) {
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
 
     public function periodOverlapsQuantity(Tenant $tenant): int
@@ -54,12 +46,24 @@ final class Tenants
                 $quantity += $currentlyRentingTenant->getQuantity();
             }
         }
+
         return $quantity + $tenant->getQuantity();
     }
 
     public function updatePeriod(int $tenantId, Period $period)
     {
         $this->find($tenantId)->updatePeriod($period);
+    }
+
+    private function exists(Person $person): bool
+    {
+        foreach ($this->tenants as $currentlyRentingTenant) {
+            if ($currentlyRentingTenant->exists($person)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function find(int $tenantId): Tenant
@@ -69,7 +73,6 @@ final class Tenants
                 return $tenant;
             }
         }
-        throw  FlatRentException::cannotFindTenant($tenantId);
+        throw FlatRentException::cannotFindTenant($tenantId);
     }
-
 }

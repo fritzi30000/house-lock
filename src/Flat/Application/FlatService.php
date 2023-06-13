@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HouseLock\Flat\Application;
 
 use HouseLock\Flat\Application\Command\CreateFlat;

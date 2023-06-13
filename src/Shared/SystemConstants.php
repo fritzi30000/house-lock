@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HouseLock\Shared;
 
 interface SystemConstants

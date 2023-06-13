@@ -25,5 +25,4 @@ final class Billed implements BillingPeriodSettlementStrategy
     {
         return SettlementType::BILLED;
     }
-
 }

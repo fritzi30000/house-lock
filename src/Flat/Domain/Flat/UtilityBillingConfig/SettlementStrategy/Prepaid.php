@@ -36,5 +36,4 @@ final class Prepaid implements BillingPeriodSettlementStrategy
     {
         return SettlementType::PREPAID;
     }
-
 }
